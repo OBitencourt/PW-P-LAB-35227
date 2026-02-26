@@ -122,6 +122,32 @@ app.get('/tasks', (req, res) => {
     })
 })
 
+app.get('/tasks/stats', (req, res) => {
+    let completedTasks = 0
+    let pendentTasks = 0
+
+    tasks.forEach(task => {
+        if (task.completed) {
+            completedTasks++
+        }
+    })
+    
+    tasks.forEach(task => {
+        if (task.completed === false) {
+            pendentTasks++
+        }
+    })
+
+    res.status(200).json({ 
+        message: "Sucesso ao buscar status gerais das tarefas", 
+        tasksList: {
+            totalTasks: tasks.length,
+            completedTasks: completedTasks,
+            pendentTasks: pendentTasks
+        } 
+    })
+})
+
 app.get('/tasks/:id', (req, res) => {
 
     const { 
